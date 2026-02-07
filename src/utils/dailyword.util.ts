@@ -1,4 +1,5 @@
 import { DailyWord, DailyWordDatabase } from "../models";
+import { getRandomInt } from "./random.util";
 
 const MILISSECONDS_IN_A_MINUTE = 60 * 1000;
 
@@ -12,8 +13,27 @@ export function getToday(): string {
   return correctedDate.toISOString().split("T")[0];
 }
 
+export function getRandomWord(): string {
+  // Pega todas as datas disponíveis no dailyWords
+  const dates = Object.keys(dailyWords);
+  
+  // Escolhe uma data aleatória
+  const randomIndex = getRandomInt(0, dates.length);
+  const randomDate = dates[randomIndex];
+  
+  // Retorna a palavra dessa data
+  return dailyWords[randomDate].word;
+}
+
 export function getDailyWord(): DailyWord {
-  return dailyWords[getToday()];
+  // Não usa mais o banco de palavras por data
+  // A palavra é gerada aleatoriamente e mantida no localStorage
+  const randomWord = getRandomWord();
+  return {
+    edition: 'RANDOM',
+    date: getToday(),
+    word: randomWord
+  };
 }
 
 export const dailyWords: DailyWordDatabase = {

@@ -9,10 +9,17 @@ function GuessLetterView(props: GuessLetterViewProps) {
   const className = "letter-wrapper rounded d-flex justify-content-center align-items-center "
     + props.state
     + ( !!props.marginRight ? ' me-2' : '' )
-    + ( isColorblindModeActive ? ' colorblind': '' );
+    + ( isColorblindModeActive ? ' colorblind': '' )
+    + ( props.isActive ? ' active-cursor' : '' );
+
+  const style = props.onClick ? { cursor: 'pointer' } : {};
 
   return (
-    <div className={className}>
+    <div 
+      className={className}
+      style={style}
+      onClick={props.onClick}
+    >
       {props.letter}
     </div>
   );

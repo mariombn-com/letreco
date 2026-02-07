@@ -18,6 +18,8 @@ const completeList = (guesses: GuessLetter[][]) => {
 function GuessList(props: GuessListProps) {
   const allGuesses = completeList(props.guesses)
     .map((guess, guessIndex) => {
+      const isCurrentGuess = guessIndex === props.currentGuessIndex;
+      
       return (
         <div
           key={guessIndex}
@@ -29,6 +31,8 @@ function GuessList(props: GuessListProps) {
               letter={letter.letter}
               state={letter.state}
               marginRight={letterIndex !== guess.length - 1}
+              isActive={isCurrentGuess && letterIndex === props.cursorPosition}
+              onClick={isCurrentGuess && props.onLetterClick ? () => props.onLetterClick!(letterIndex) : undefined}
             />
           ))}
         </div>

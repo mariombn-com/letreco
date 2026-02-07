@@ -43,6 +43,7 @@ export interface EndGameScreenProps {
 
 export interface SavedDailyGame {
   date: string;
+  word: string;
   guesses: GuessLetter[][];
   winState: GameWinState;
   letterStates: KeyboardLetterStates;

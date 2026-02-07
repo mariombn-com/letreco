@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { GuessDistributionKeys, StatisticsContext } from '../hooks/useStatistics';
 import { DailyWord, GuessLetter, GuessLetterState, GuessValidationResult, KeyboardButtonStates, KeyboardLetterStates, SavedDailyGame } from '../models';
-import { getDailyWord, getLast, getToday, wordList } from '../utils';
+import { getDailyWord, getLast, getToday, wordList, getRandomWord } from '../utils';
 import EndGameScreen from './EndGameScreen';
 import GuessList from './GuessList';
 import Keyboard from './Keyboard';
@@ -17,12 +17,13 @@ export const KEY_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 export const GAME_END_DELAY = 0.8 * 1000;
 
 export const SAVED_GAME_KEY = 'savedGame';
-export const SAVED_GAME_INIT: SavedDailyGame = {
+const getSavedGameInit = (): SavedDailyGame => ({
   date: getToday(),
-  guesses: [[]],
+  word: getRandomWord(),
+  guesses: [Array(WORD_SIZE).fill(null).map(() => ({ letter: '', state: 'typing' as GuessLetterState }))],
   winState: { isGameEnded: false, isGameWon: false },
   letterStates: {},
-}
+});
 
 const BUTTON_STATES_INIT: KeyboardButtonStates = {
   letters: true,
@@ -32,11 +33,12 @@ const BUTTON_STATES_INIT: KeyboardButtonStates = {
 
 const updateKeyboardButtonStates = (guesses: GuessLetter[][]): KeyboardButtonStates => {
   const lastGuess = getLast(guesses || [[]]);
+  const filledCount = lastGuess.filter(gl => gl.letter !== '').length;
 
   return {
-    letters: lastGuess.length < WORD_SIZE,
-    back: lastGuess.length > 0,
-    enter: lastGuess.length === WORD_SIZE,
+    letters: filledCount < WORD_SIZE,
+    back: filledCount > 0,
+    enter: filledCount === WORD_SIZE,
   }
 }
 
@@ -44,26 +46,32 @@ function Game() {
   const [statistics, setStatistics] = useContext(StatisticsContext);
 
   const [{
-    date: savedDate, guesses, winState, letterStates,
-  }, setSavedGame] = useLocalStorage(SAVED_GAME_KEY, SAVED_GAME_INIT);
+    date: savedDate, word, guesses, winState, letterStates,
+  }, setSavedGame] = useLocalStorage(SAVED_GAME_KEY, getSavedGameInit());
 
   const [buttonStates, setButtonStates] = useState<KeyboardButtonStates>(
     updateKeyboardButtonStates(guesses)
   );
 
-  if (savedDate !== getToday()) {
-    setButtonStates(BUTTON_STATES_INIT);
-    setSavedGame(SAVED_GAME_INIT);
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
+
+  // Se não tiver palavra salva, inicializa com uma nova
+  if (!word) {
+    const newGame = getSavedGameInit();
+    setSavedGame(newGame);
   }
 
   const [isEndGameScreenOpen, setIsEndGameScreenOpen] = useState<boolean>(false);
 
-  const dailyWord = useMemo<DailyWord>(() => getDailyWord(), []);
+  const dailyWord = useMemo<DailyWord>(() => ({
+    edition: 'RANDOM',
+    date: savedDate,
+    word: word || getRandomWord(),
+  }), [word, savedDate]);
 
 
   const updateStatistics = (isGameWon: boolean, guessesAmount: number) => {
     const newStreak = isGameWon ? statistics.currentStreak + 1 : 0;
-    console.log(newStreak);
 
     const guessResult = (isGameWon ? guessesAmount.toString() : 'X') as GuessDistributionKeys;
 
@@ -83,6 +91,7 @@ function Game() {
 
   const isLastGuessInWordList = (): boolean => {
     const lastGuessWord = getLast(guesses)
+      .filter(guess => guess.letter !== '')
       .map(guess => guess.letter)
       .join('');
 
@@ -147,24 +156,101 @@ function Game() {
   const handleKeyboardLetter = (letter: string) => {
     if (winState.isGameEnded) return;
 
-    const updatedGuesses = updateLastGuess([...getLast(guesses), { letter, state: 'typing' }]);
-
-    setSavedGame({ guesses: updatedGuesses });
-    setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+    let lastGuess = getLast(guesses);
+    
+    // Verifica se já tem 5 letras preenchidas
+    const filledCount = lastGuess.filter(gl => gl.letter !== '').length;
+    if (filledCount >= WORD_SIZE) return;
+    
+    // Garante que temos um array de 5 elementos
+    let newGuess: GuessLetter[];
+    if (lastGuess.length === WORD_SIZE) {
+      // Já tem 5 elementos, fazer cópia
+      newGuess = lastGuess.map(gl => ({ ...gl }));
+    } else {
+      // Criar array de 5 e copiar elementos existentes
+      newGuess = Array(WORD_SIZE).fill(null).map(() => ({ letter: '', state: 'typing' as GuessLetterState }));
+      for (let i = 0; i < lastGuess.length && i < WORD_SIZE; i++) {
+        newGuess[i] = { ...lastGuess[i] };
+      }
+    }
+    
+    // Insere letra na posição do cursor se estiver vazia
+    if (cursorPosition < WORD_SIZE && newGuess[cursorPosition].letter === '') {
+      newGuess[cursorPosition] = { letter, state: 'typing' };
+      
+      const updatedGuesses = updateLastGuess(newGuess);
+      setSavedGame({ guesses: updatedGuesses });
+      setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+      
+      // Move cursor para próxima posição vazia
+      let nextPos = cursorPosition + 1;
+      while (nextPos < WORD_SIZE && newGuess[nextPos].letter !== '') {
+        nextPos++;
+      }
+      if (nextPos < WORD_SIZE) {
+        setCursorPosition(nextPos);
+      }
+    } else if (cursorPosition < WORD_SIZE) {
+      // Posição ocupada - procura próxima vazia
+      for (let i = cursorPosition + 1; i < WORD_SIZE; i++) {
+        if (newGuess[i].letter === '') {
+          setCursorPosition(i);
+          return;
+        }
+      }
+      // Se não achou depois, procura antes
+      for (let i = 0; i < cursorPosition; i++) {
+        if (newGuess[i].letter === '') {
+          setCursorPosition(i);
+          return;
+        }
+      }
+    }
   }
 
   const handleKeyboardBack = () => {
     if (winState.isGameEnded) return;
 
-    const lastGuess = getLast(guesses);
-    const newGuess: GuessLetter[] = lastGuess
-      .slice(0, lastGuess.length - 1)
-      .map(oldGuess => ({ letter: oldGuess.letter, state: 'typing' }) as GuessLetter);
+    let lastGuess = getLast(guesses);
+    const filledCount = lastGuess.filter(gl => gl.letter !== '').length;
+    if (filledCount === 0) return;
 
+    // Garante que temos um array de 5 elementos
+    let newGuess: GuessLetter[];
+    if (lastGuess.length === WORD_SIZE) {
+      newGuess = lastGuess.map(gl => ({ ...gl }));
+    } else {
+      newGuess = Array(WORD_SIZE).fill(null).map(() => ({ letter: '', state: 'typing' as GuessLetterState }));
+      for (let i = 0; i < lastGuess.length && i < WORD_SIZE; i++) {
+        newGuess[i] = { ...lastGuess[i] };
+      }
+    }
+    
+    // Remove letra na posição do cursor se tiver
+    if (cursorPosition < WORD_SIZE && newGuess[cursorPosition].letter !== '') {
+      newGuess[cursorPosition] = { letter: '', state: 'typing' };
+    } else {
+      // Procura última letra preenchida antes do cursor
+      for (let i = cursorPosition - 1; i >= 0; i--) {
+        if (newGuess[i].letter !== '') {
+          newGuess[i] = { letter: '', state: 'typing' };
+          setCursorPosition(i);
+          const updatedGuesses = updateLastGuess(newGuess);
+          setSavedGame({ guesses: updatedGuesses });
+          setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+          return;
+        }
+      }
+    }
+    
     const updatedGuesses = updateLastGuess(newGuess);
-
     setSavedGame({ guesses: updatedGuesses });
     setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+  }
+
+  const handleLetterClick = (position: number) => {
+    setCursorPosition(position);
   }
 
   const handleKeyboardEnter = () => {
@@ -206,13 +292,17 @@ function Game() {
       }, GAME_END_DELAY);
 
     } else {
-      const updatedGuesses = [...updateLastGuess(validatedGuess), []];
+      const newEmptyGuess = Array(WORD_SIZE).fill(null).map(() => ({ letter: '', state: 'typing' as GuessLetterState }));
+      const updatedGuesses = [...updateLastGuess(validatedGuess), newEmptyGuess];
 
       setSavedGame({
         guesses: updatedGuesses,
         letterStates: newLetterStates,
       });
       setButtonStates(updateKeyboardButtonStates(updatedGuesses));
+      
+      // Reset cursor para nova linha
+      setCursorPosition(0);
     }
   }
 
@@ -258,6 +348,9 @@ function Game() {
       <div className='mb-4'>
         <GuessList
           guesses={guesses}
+          currentGuessIndex={guesses.length - 1}
+          cursorPosition={cursorPosition}
+          onLetterClick={!winState.isGameEnded ? handleLetterClick : undefined}
         />
       </div>
 

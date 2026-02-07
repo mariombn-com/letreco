@@ -62,3 +62,17 @@
 .wordlistError.colorblind {
   border: 3px solid #D55E00;
 }
+
+.active-cursor {
+  box-shadow: 0 0 0 3px #51b36e;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px #51b36e;
+  }
+  50% {
+    box-shadow: 0 0 0 3px #51b36e, 0 0 10px #51b36e;
+  }
+}
