@@ -1,5 +1,7 @@
 .keyboard-button {
-  border: solid 1px #252525;
+  border: solid 1px #666666;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
   font-size: 16px;
 }
 
@@ -15,7 +17,7 @@
 
 .right {
   background-color: #51b36e;
-  color: #f4f3f1;
+  color: #e0e0e0;
 }
 
 .right.colorblind {
@@ -32,7 +34,7 @@
 
 .wrong {
   background-color: #943e3c;
-  color: #f4f3f1;
+  color: #e0e0e0;
 }
 
 .wrong.colorblind {
@@ -49,7 +51,7 @@
 
 .displaced {
   background-color: #c79c2e;
-  color: #f4f3f1;
+  color: #e0e0e0;
 }
 
 .displaced.colorblind {

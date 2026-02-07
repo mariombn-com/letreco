@@ -1,5 +1,5 @@
 import '../styles/Header.css';
-import { BsFillBarChartLineFill, BsFillGearFill, BsQuestionLg, BsTwitter } from "react-icons/bs"
+import { BsFillBarChartLineFill, BsFillGearFill, BsQuestionLg } from "react-icons/bs"
 import HowToPlayScreen from './HowToPlayScreen';
 import { shuffleArray } from '../utils';
 import { useContext, useState } from 'react';
@@ -7,8 +7,7 @@ import SettingsScreen from './SettingsScreen';
 import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 import { StatisticsScreen } from './StatisticsScreen';
 
-const APP_NAME = 'LETRECO';
-const TWITTER_URL = 'https://twitter.com/meuletreco';
+const APP_NAME = 'APPALAVRA';
 
 function Header() {
   const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
@@ -52,17 +51,10 @@ function Header() {
 
       <div className='d-flex'>
         <button
-          className='header-button rounded d-flex align-items-center justify-content-center py-2 me-2'
+          className='header-button rounded d-flex align-items-center justify-content-center py-2'
           onClick={() => setIsHowToPlayOpen(true)}
         >
           <BsQuestionLg />
-        </button>
-
-        <button
-          className='header-button rounded d-flex align-items-center justify-content-center py-2'
-          onClick={() => window.open(TWITTER_URL, '_blank')}
-        >
-          <BsTwitter />
         </button>
       </div>
 

@@ -33,7 +33,7 @@ function HowToPlayScreen(props: OverlayScreenProps) {
         <h1 className="text-center">COMO JOGAR</h1>
 
         <p className="text-center">
-          Todos os dias, uma nova palavra aparecerá no Letreco para você adivinhar.<br/>
+          Todos os dias, uma nova palavra aparecerá no Appalavra para você adivinhar.<br/>
           Você terá 6 tentativas. Cada uma delas deve ser uma palavra que exista.<br/>
           Acentos e cedilha são ignorados, tanto nas tentativas, quanto na resposta.<br/>
           Após chutar, as letras mudarão para indicar o quão perto você está da resposta.

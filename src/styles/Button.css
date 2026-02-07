@@ -1,3 +1,5 @@
 .styled-button {
-  border: solid 1px #252525;
+  border: solid 1px #666666;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
 }

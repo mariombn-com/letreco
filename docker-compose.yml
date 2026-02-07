@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  appalavra:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${ENVIRONMENT:-production}-appalavra
+    restart: unless-stopped
+    ports:
+      - ${PORT:-80}:80
+    environment:
+      - NODE_ENV=production
+    networks:
+      - appalavra-network
+
+networks:
+  appalavra-network:
+    driver: bridge

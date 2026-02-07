@@ -1,5 +1,5 @@
 .letter-wrapper {
-  border: 2px solid #252525;
+  border: 2px solid #666666;
   width: 48px;
   height: 40px;
 
@@ -8,21 +8,21 @@
 }
 
 .typing {
-  border: 3px solid #252525;
-  background-color: #f4f3f1;
-  color: #252525;
+  border: 3px solid #888888;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
 }
 
 .disabled {
-  border: 1px solid #252525;
-  background-color: #f4f3f1;
-  color: #252525;
+  border: 1px solid #666666;
+  background-color: #2a2a2a;
+  color: #888888;
 }
 
 .wrong {
-  border: 1px solid #252525;
+  border: 1px solid #666666;
   background-color: #943e3c;
-  color: #f4f3f1;
+  color: #e0e0e0;
 }
 
 .wrong.colorblind {
@@ -30,9 +30,9 @@
 }
 
 .right {
-  border: 1px solid #252525;
+  border: 1px solid #666666;
   background-color: #51b36e;
-  color: #f4f3f1;
+  color: #e0e0e0;
 }
 
 .right.colorblind {
@@ -41,9 +41,9 @@
 }
 
 .displaced {
-  border: 1px solid #252525;
+  border: 1px solid #666666;
   background-color: #c79c2e;
-  color: #f4f3f1 !important;
+  color: #e0e0e0 !important;
 }
 
 .displaced.colorblind {
@@ -55,8 +55,8 @@
 
 .wordlistError {
   border: 3px solid #943e3c;
-  background-color: #f4f3f1;
-  color: #252525;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
 }
 
 .wordlistError.colorblind {
