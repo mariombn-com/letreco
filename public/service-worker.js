@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 // Nome do cache - atualizar a versão força atualização do cache
-const CACHE_NAME = 'appalavra-v1';
+const CACHE_NAME = 'appalavra-v2';
 
 // Arquivos para cachear
 const urlsToCache = [
@@ -13,8 +13,15 @@ const urlsToCache = [
   '/static/js/bundle.js',
   '/manifest.json',
   '/favicon.ico',
+  '/icons/48x48.png',
+  '/icons/72x72.png',
+  '/icons/96x96.png',
+  '/icons/144x144.png',
+  '/icons/168x168.png',
   '/icons/192x192.png',
-  '/icons/512x512.png'
+  '/icons/512x512.png',
+  '/splash.png',
+  '/piquinim.png'
 ];
 
 // Instalação do Service Worker
