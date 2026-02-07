@@ -1,5 +1,5 @@
 .letter-wrapper {
-  border: 2px solid #666666;
+  border: 2px solid var(--border-color);
   width: 48px;
   height: 40px;
 
@@ -8,21 +8,21 @@
 }
 
 .typing {
-  border: 3px solid #888888;
-  background-color: #2a2a2a;
-  color: #e0e0e0;
+  border: 3px solid var(--border-color);
+  background-color: var(--button-bg);
+  color: var(--text-primary);
 }
 
 .disabled {
-  border: 1px solid #666666;
-  background-color: #2a2a2a;
-  color: #888888;
+  border: 1px solid var(--border-color);
+  background-color: var(--button-bg);
+  color: var(--text-secondary);
 }
 
 .wrong {
   border: 1px solid #666666;
   background-color: #943e3c;
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 .wrong.colorblind {
@@ -32,7 +32,7 @@
 .right {
   border: 1px solid #666666;
   background-color: #51b36e;
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 .right.colorblind {
@@ -43,7 +43,7 @@
 .displaced {
   border: 1px solid #666666;
   background-color: #c79c2e;
-  color: #e0e0e0 !important;
+  color: #ffffff !important;
 }
 
 .displaced.colorblind {
@@ -55,8 +55,8 @@
 
 .wordlistError {
   border: 3px solid #943e3c;
-  background-color: #2a2a2a;
-  color: #e0e0e0;
+  background-color: var(--button-bg);
+  color: var(--text-primary);
 }
 
 .wordlistError.colorblind {

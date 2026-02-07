@@ -57,6 +57,7 @@ function HowToPlayScreen(props: OverlayScreenProps) {
         </div>
 
         <p className="text-center credits">
+          Versão de <a href="https://github.com/mariombn-com/letreco" target="_blank" rel="noreferrer">Mario de Moraes</a><br/>
           criado por <a href="https://gabtoschi.com" target="_blank" rel="noreferrer">Gabriel Toschi</a><br/>
           banco de palavras por <a href="https://pt-br.libreoffice.org/projetos/vero" target="_blank" rel="noreferrer">VERO</a><br/>
           versão brasileira não-oficial do <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank" rel="noreferrer">Wordle</a><br/>

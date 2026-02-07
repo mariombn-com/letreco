@@ -5,10 +5,12 @@ const GLOBAL_SETTINGS_KEY = 'globalSettings';
 
 export interface GlobalSettings {
   isColorblindModeActive: boolean;
+  isDarkTheme: boolean;
 }
 
 const GlobalSettingsInitialValue: GlobalSettings = {
   isColorblindModeActive: false,
+  isDarkTheme: true,
 }
 
 export type GlobalSettingsHook = [GlobalSettings, (newSettings: Partial<GlobalSettings>) => void];

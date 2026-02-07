@@ -1,5 +1,10 @@
 .styled-button {
-  border: solid 1px #666666;
-  background-color: #2a2a2a;
-  color: #e0e0e0;
+  border: solid 1px var(--border-color);
+  background-color: var(--button-bg);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+}
+
+.styled-button:hover {
+  background-color: var(--button-hover);
 }

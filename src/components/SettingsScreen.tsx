@@ -9,14 +9,14 @@ function SettingsScreen({
   handleCloseScreen,
 }: OverlayScreenProps) {
   const [{
-    isColorblindModeActive,
+    isDarkTheme,
   }, setGlobalSettings] = useContext(GlobalSettingsContext);
 
-  const getActiveString = (isActive: boolean): string =>
-    (isActive ? 'ATIVADO' : 'DESATIVADO');
+  const getThemeString = (isDark: boolean): string =>
+    (isDark ? 'ESCURO' : 'CLARO');
 
-  const getActiveButtonLabel = (isActive: boolean): string =>
-    (isActive ? 'DESATIVAR' : 'ATIVAR');
+  const getThemeButtonLabel = (isDark: boolean): string =>
+    (isDark ? 'MUDAR PARA CLARO' : 'MUDAR PARA ESCURO');
 
   const handleNewWord = () => {
     localStorage.removeItem('savedGame');
@@ -25,11 +25,11 @@ function SettingsScreen({
 
   return <Overlay content={
     <div className="content text-center">
-      <h3>Modo daltônico</h3>
-      <p>Altera as cores das dicas. O modo está <b>{getActiveString(isColorblindModeActive)}</b>.</p>
+      <h3>Tema</h3>
+      <p>Altera o tema da aplicação. O tema atual é <b>{getThemeString(isDarkTheme)}</b>.</p>
       <Button
-        label={getActiveButtonLabel(isColorblindModeActive)}
-        onClick={() => {setGlobalSettings({ isColorblindModeActive: !isColorblindModeActive })}}
+        label={getThemeButtonLabel(isDarkTheme)}
+        onClick={() => {setGlobalSettings({ isDarkTheme: !isDarkTheme })}}
       />
 
       <hr/>

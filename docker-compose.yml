@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${ENVIRONMENT:-production}-appalavra
+    container_name: ${REACT_APP_ENVIRONMENT:-production}-appalavra
     restart: unless-stopped
     ports:
       - ${PORT:-80}:80
