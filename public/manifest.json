@@ -40,6 +40,10 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#51b36e",
-  "background_color": "#f4f3f1"
+  "theme_color": "#8B0000",
+  "background_color": "#1a1a1a",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["games", "entertainment"],
+  "description": "Um jogo diário de adivinhar palavras. Teste suas habilidades linguísticas!"
 }

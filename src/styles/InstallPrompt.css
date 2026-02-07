@@ -1,0 +1,138 @@
+.install-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+  max-width: 400px;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-prompt-content {
+  background-color: var(--button-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  text-align: center;
+}
+
+.install-prompt-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.install-prompt-close:hover {
+  background-color: var(--button-hover);
+}
+
+.install-prompt-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.install-prompt-content h3 {
+  color: #8B0000;
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+}
+
+.install-prompt-content p {
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.install-prompt-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.install-btn,
+.dismiss-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Signika Negative', sans-serif;
+}
+
+.install-btn {
+  background-color: #8B0000;
+  color: #FFE4B5;
+}
+
+.install-btn:hover {
+  background-color: #a00000;
+  transform: scale(1.05);
+}
+
+.dismiss-btn {
+  background-color: var(--button-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.dismiss-btn:hover {
+  background-color: var(--button-hover);
+}
+
+@media (max-width: 500px) {
+  .install-prompt {
+    bottom: 10px;
+    width: 95%;
+  }
+
+  .install-prompt-content {
+    padding: 15px;
+  }
+
+  .install-prompt-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .install-prompt-content p {
+    font-size: 0.9rem;
+  }
+
+  .install-prompt-buttons {
+    flex-direction: column;
+  }
+
+  .install-btn,
+  .dismiss-btn {
+    width: 100%;
+  }
+}

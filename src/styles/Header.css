@@ -26,11 +26,11 @@
 }
 
 .letter-red {
-  color: #943e3c;
+  color: #8B0000;
 }
 
 .letter-red.colorblind {
-  color: #1d1d1d;
+  color: #8B0000;
 }
 
 .letter-yellow {

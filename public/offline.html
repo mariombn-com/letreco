@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appalavra - Offline</title>
+  <style>
+    body {
+      font-family: 'Signika Negative', sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #8B0000;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-family: 'Acme', sans-serif;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+    
+    .icon {
+      font-size: 5rem;
+      margin-bottom: 2rem;
+    }
+    
+    button {
+      background-color: #8B0000;
+      color: #FFE4B5;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: opacity 0.3s;
+      font-family: 'Signika Negative', sans-serif;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>Sem Conexão</h1>
+  <p>
+    Você está offline. Por favor, verifique sua conexão de internet e tente novamente.
+  </p>
+  <p style="font-size: 0.9rem; color: #999;">
+    Este app funciona offline, mas algumas funcionalidades podem não estar disponíveis.
+  </p>
+  <button onclick="window.location.reload()">Tentar Novamente</button>
+</body>
+</html>

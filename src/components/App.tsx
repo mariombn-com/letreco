@@ -1,5 +1,6 @@
 import Game from "./Game";
 import Header from "./Header";
+import InstallPrompt from "./InstallPrompt";
 import "../styles/App.css";
 import {
   GlobalSettingsContext,
@@ -46,6 +47,8 @@ function App() {
             </div>
           )}
         </div>
+        
+        <InstallPrompt />
       </GlobalSettingsContext.Provider>
     </StatisticsContext.Provider>
   );

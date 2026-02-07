@@ -1,32 +1,19 @@
 import '../styles/Header.css';
 import { BsFillBarChartLineFill, BsFillGearFill, BsQuestionLg } from "react-icons/bs"
 import HowToPlayScreen from './HowToPlayScreen';
-import { shuffleArray } from '../utils';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import SettingsScreen from './SettingsScreen';
-import { GlobalSettingsContext } from '../hooks/useGlobalSettings';
 import { StatisticsScreen } from './StatisticsScreen';
 
 const APP_NAME = 'APPALAVRA';
 
 function Header() {
-  const [{isColorblindModeActive}] = useContext(GlobalSettingsContext);
-
   const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isStatisticsOpen, setIsStatisticsOpen] = useState(false);
 
-  const shuffledIndexes = shuffleArray(Array.from(Array(APP_NAME.length).keys()));
   const appName = APP_NAME.split('').map((letter, index) => {
-    let className = '';
-
-    if (index === shuffledIndexes[0]) className = 'letter-green';
-    if (index === shuffledIndexes[1]) className = 'letter-yellow';
-    if (index === shuffledIndexes[2]) className = 'letter-red';
-
-    if (isColorblindModeActive) className += ' colorblind';
-
-    return (<span key={index.toString()} className={className}>{letter}</span>)
+    return (<span key={index.toString()} className='letter-red'>{letter}</span>)
   });
 
   return (
